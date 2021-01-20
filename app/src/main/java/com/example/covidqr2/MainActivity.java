@@ -6,14 +6,23 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 
 public class MainActivity extends AppCompatActivity {
     private SQLiteDatabase mDatabase;
@@ -21,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditTextName;
     public RadioButton mCheckIn;
     public RadioButton mCheckOut;
+    DatabaseReference dbref;
+    member Member;
     //private TextView mTextViewAmount;
     private TextView mTimeText;
     //private int mAmount = 0;
@@ -28,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+        Toast.makeText(MainActivity.this,"firebase connection success", Toast.LENGTH_SHORT).show();
+
+
         GroceryDBHelper dbHelper = new GroceryDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
@@ -38,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
         mTimeText = findViewById(R.id.textview_time_item);
         mCheckIn = findViewById(R.id.CheckIn);
         mCheckOut = findViewById(R.id.CheckOut);
+
+        Member = new member();
+        dbref = FirebaseDatabase.getInstance().getReference().child("member");
+
+
         //mTextViewAmount = findViewById(R.id.textview_amount);
         //Button buttonIncrease = findViewById(R.id.button_increase);
         //Button buttonDecrease = findViewById(R.id.button_decrease);
@@ -76,12 +98,35 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         String date = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
+        String dateDay = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
         String name = mEditTextName.getText().toString();
+        String status1 = "Checked in";
+        String status2 = "Checked out";
+
         ContentValues cv = new ContentValues();
         if(mCheckIn.isChecked() == true){
             cv.put(MyCovidEntry.CovidEntry.COLUMN_CHECKED, "Checked in");
+
+            Member.setBuildingName(name);
+            Member.setCheckStatus(status1);
+            Member.setDate(dateDay);
+            Member.setPersonName("hema");
+            dbref.push().setValue(Member);
+
+            Toast.makeText(MainActivity.this, "data successfully added", LENGTH_SHORT).show();
+
+
         }else if(mCheckOut.isChecked() == true){
             cv.put(MyCovidEntry.CovidEntry.COLUMN_CHECKED, "Checked out");
+
+            Member.setBuildingName(name);
+            Member.setCheckStatus(status2);
+            Member.setDate(dateDay);
+            Member.setPersonName("hema");
+            dbref.push().setValue(Member);
+
+            Toast.makeText(MainActivity.this, "data successfully added", LENGTH_SHORT).show();
+
         }
         cv.put(MyCovidEntry.CovidEntry.COLUMN_NAME, name);
         //cv.put(MyCovidEntry.CovidEntry.COLUMN_AMOUNT, mAmount);

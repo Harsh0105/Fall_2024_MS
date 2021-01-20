@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "283620415223",
+    "project_id": "covidqr2",
+    "storage_bucket": "covidqr2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283620415223:android:9d9a463239b81e27ece5f2",
+        "android_client_info": {
+          "package_name": "com.example.covidqr2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283620415223-eshr1mha2ken2ucg0a1prs2qbuiaa1g2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXLUrWiBYl7S03olNfNyEfjOVLoBysivo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283620415223-eshr1mha2ken2ucg0a1prs2qbuiaa1g2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

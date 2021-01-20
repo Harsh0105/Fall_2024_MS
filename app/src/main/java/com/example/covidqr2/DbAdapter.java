@@ -52,6 +52,10 @@ public class DbAdapter extends RecyclerView.Adapter<DbAdapter.DbViewHolder> {
             holder.checkText.setBackgroundColor(Color.RED);
         }
 
+        else if (check.equals("Checked in")){
+            holder.checkText.setBackgroundColor(Color.GREEN);
+        }
+
         holder.nameText.setText(name);
         //holder.countText.setText(String.valueOf(amount));
         holder.timeText.setText(time);
