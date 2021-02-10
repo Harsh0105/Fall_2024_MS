@@ -1,8 +1,12 @@
 package com.example.covidqr2;
+import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +21,8 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditTextName;
     public RadioButton mCheckIn;
     public RadioButton mCheckOut;
+    public  String answer;
     DatabaseReference dbref;
     member Member;
     //private TextView mTextViewAmount;
@@ -58,12 +65,14 @@ public class MainActivity extends AppCompatActivity {
 
         Member = new member();
         dbref = FirebaseDatabase.getInstance().getReference().child("member");
-
+dbref.keepSynced(true);
 
         //mTextViewAmount = findViewById(R.id.textview_amount);
         //Button buttonIncrease = findViewById(R.id.button_increase);
         //Button buttonDecrease = findViewById(R.id.button_decrease);
         Button buttonAdd = findViewById(R.id.button_add);
+        final Activity activity = this;
+
 //        buttonIncrease.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -78,12 +87,33 @@ public class MainActivity extends AppCompatActivity {
 //        });
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                addItem();
+            public void onClick(View v) { IntentIntegrator integrator = new IntentIntegrator(activity);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+                integrator.setPrompt("scan");
+                integrator.setCameraId(0);
+                integrator.setBeepEnabled(true);
+                integrator.setBarcodeImageEnabled(false);
+                integrator.initiateScan();
+
+
             }
         });
+
     }
-//    private void increase() {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
+        Toast.makeText(this,result.getContents(),Toast.LENGTH_SHORT).show();
+        super.onActivityResult(requestCode, resultCode, data);
+        answer = String.valueOf(result.getContents());
+        addItem();
+
+    }
+
+    //    private void increase() {
 //        mAmount++;
 //        mTextViewAmount.setText(String.valueOf(mAmount));
 //    }
@@ -94,17 +124,16 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
     private void addItem() {
-        if (mEditTextName.getText().toString().trim().length() == 0 ) {
-            return;
-        }
+
+
         String date = new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
         String dateDay = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-        String name = mEditTextName.getText().toString();
+        String name = answer;
         String status1 = "Checked in";
         String status2 = "Checked out";
 
         ContentValues cv = new ContentValues();
-        if(mCheckIn.isChecked() == true){
+
             cv.put(MyCovidEntry.CovidEntry.COLUMN_CHECKED, "Checked in");
 
             Member.setBuildingName(name);
@@ -115,19 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(MainActivity.this, "data successfully added", LENGTH_SHORT).show();
 
-
-        }else if(mCheckOut.isChecked() == true){
-            cv.put(MyCovidEntry.CovidEntry.COLUMN_CHECKED, "Checked out");
-
-            Member.setBuildingName(name);
-            Member.setCheckStatus(status2);
-            Member.setDate(dateDay);
-            Member.setPersonName("hema");
-            dbref.push().setValue(Member);
-
-            Toast.makeText(MainActivity.this, "data successfully added", LENGTH_SHORT).show();
-
-        }
         cv.put(MyCovidEntry.CovidEntry.COLUMN_NAME, name);
         //cv.put(MyCovidEntry.CovidEntry.COLUMN_AMOUNT, mAmount);
         cv.put(MyCovidEntry.CovidEntry.COLUMN_MYTIME, date);
