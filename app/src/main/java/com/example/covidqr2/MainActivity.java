@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         mCheckOut = findViewById(R.id.CheckOut);
 
         Member = new member();
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         dbref = FirebaseDatabase.getInstance().getReference().child("member");
 dbref.keepSynced(true);
 
