@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     tools:context="com.example.covidqr2.MainActivity">
-    <EditText
-        android:id="@+id/edittext_name"
-        android:layout_width="match_parent"
-        android:layout_height="40sp"
-        android:hint="@string/place_name"
-        />
+<!--    <EditText-->
+<!--        android:id="@+id/edittext_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="40sp"-->
+<!--        android:hint="@string/place_name"-->
+<!--        />-->
 <!--    <TextView-->
 <!--        android:id="@+id/textview_amount"-->
 <!--        android:layout_width="wrap_content"-->
@@ -44,14 +44,12 @@
 
     <Button
         android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/myradio"
-        android:layout_marginLeft="262dp"
-        android:textSize="20sp"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/edittext_name"
-        android:text="Add" />
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:text="Scan now"
+        android:textSize="20sp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
@@ -61,27 +59,27 @@
 <!--        android:layout_below="@+id/textview_amount"-->
 
 
-    <RadioGroup
-        android:id="@+id/myradio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edittext_name"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        >
+<!--    <RadioGroup-->
+<!--        android:id="@+id/myradio"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/edittext_name"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        >-->
 
-        <RadioButton
-            android:id="@+id/CheckIn"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Check in" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/CheckIn"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Check in" />-->
 
-        <RadioButton
-            android:id="@+id/CheckOut"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Check out" />
-    </RadioGroup>
+<!--        <RadioButton-->
+<!--            android:id="@+id/CheckOut"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Check out" />-->
+<!--    </RadioGroup>-->
 
 
 </RelativeLayout>

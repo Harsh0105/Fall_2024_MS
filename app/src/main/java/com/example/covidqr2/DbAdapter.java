@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class DbAdapter extends RecyclerView.Adapter<DbAdapter.DbViewHolder> {
     private Context mContext;
-    private Cursor mCursor;
+    public Cursor mCursor;
 
     public DbAdapter(Context context, Cursor cursor) {
         mContext = context;
@@ -47,11 +47,9 @@ public class DbAdapter extends RecyclerView.Adapter<DbAdapter.DbViewHolder> {
         //int amount = mCursor.getInt(mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_AMOUNT));
         String time = mCursor.getString(mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_MYTIME));
         String check = mCursor.getString(mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_CHECKED));
-
         if(check.equals("Checked out")){
             holder.checkText.setBackgroundColor(Color.RED);
         }
-
         else if (check.equals("Checked in")){
             holder.checkText.setBackgroundColor(Color.GREEN);
         }
