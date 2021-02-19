@@ -13,10 +13,12 @@ import android.widget.TextView;
 public class DbAdapter extends RecyclerView.Adapter<DbAdapter.DbViewHolder> {
     private Context mContext;
     public Cursor mCursor;
+    public Cursor lCursor;
 
     public DbAdapter(Context context, Cursor cursor) {
         mContext = context;
         mCursor = cursor;
+
     }
     public class DbViewHolder extends RecyclerView.ViewHolder {
         public TextView nameText;
@@ -68,6 +70,7 @@ public class DbAdapter extends RecyclerView.Adapter<DbAdapter.DbViewHolder> {
     public void swapCursor(Cursor newCursor) {
         if (mCursor != null) {
             mCursor.close();
+
         }
         mCursor = newCursor;
         if (newCursor != null) {

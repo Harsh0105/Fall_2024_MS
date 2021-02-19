@@ -117,35 +117,38 @@ public class MainActivity extends AppCompatActivity {
     private void addItem() {
         String status1 = "Checked in";
         String status2 = "Checked out";
+        String oldLocation;
+        String oldStatus;
         String newLocation = newlocation;
-        String oldLocation = mAdapter.mCursor.getString(mAdapter.mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_NAME)).trim();
-        System.out.println(mAdapter.mCursor.getCount());
-        System.out.println(oldLocation);
-        String oldStatus = mAdapter.mCursor.getString(mAdapter.mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_CHECKED)).trim();
-        System.out.println(oldStatus);
+        if(mAdapter.mCursor.getCount() == 0){
+            oldLocation = "empty";
+            oldStatus = "empty";
+        }
+        else{
+        mAdapter.mCursor.moveToFirst();
+        oldLocation = mAdapter.mCursor.getString(mAdapter.mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_NAME));
+
+       // System.out.println(oldLocation);
+        oldStatus = mAdapter.mCursor.getString(mAdapter.mCursor.getColumnIndex(MyCovidEntry.CovidEntry.COLUMN_CHECKED));
         //System.out.println(oldStatus);
-//        localUpdate(status1, oldLocation);
-//        serverUpdate(status1,oldLocation);
-//        localUpdate(status2, oldLocation);
-//        serverUpdate(status2,oldLocation);
-        System.out.println(oldStatus);
-        if (oldStatus.equals(status2) || oldStatus.equals(null)){
+          }
+        if (oldStatus.equals(status2) || oldStatus.equals("empty")){
             localUpdate(status1, newLocation);
             serverUpdate(status1,newLocation);
-            mAdapter.mCursor.moveToLast();
+
         }
         else if(oldStatus.equals(status1)){
             if(newLocation.equals(oldLocation)){
                 localUpdate(status2, oldLocation);
                 serverUpdate(status2,oldLocation);
-                mAdapter.mCursor.moveToLast();
+
             }
             else if (newLocation.equals(oldLocation) == false){
                 localUpdate(status1, newLocation);
                 serverUpdate(status1,newLocation);
                 localUpdate(status2, oldLocation);
                 serverUpdate(status2,oldLocation);
-                mAdapter.mCursor.moveToLast();
+
 
             }
         }
