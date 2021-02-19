@@ -16,6 +16,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            xmlns:tools="http://schemas.android.com/tools"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>
